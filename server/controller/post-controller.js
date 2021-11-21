@@ -1,4 +1,5 @@
 
+import { response } from 'express';
 import Post from '../schema/post-schema.js';
 
 
@@ -13,6 +14,17 @@ export const createPost= async (request,response)=>{
     }
     catch(error)
     {
-        response.status(500).json(error)
+        response.status(500).json(error,"blog saving error")
+    }
+}
+
+export const getAllPosts = async (request,response) =>{
+
+    try{
+            let posts =await Post.find({});
+            response.status(200).json(posts);
+    }
+    catch(error){
+        response.status(500).json("error in postcontroller ",error);
     }
 }

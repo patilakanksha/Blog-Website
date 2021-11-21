@@ -15,3 +15,17 @@ export const createPost = async (post)=>{
     
 }
 
+export const getAllPosts = async() =>{
+  try{
+    //return "testing";
+       let response = await axios.get(`${URL}/posts`)                //posts api calling from route
+       return response.data;
+
+  }
+  catch(error)
+  {
+    console.log('error while calling getAllPost API ',error);
+  }
+
+}
+

@@ -39,18 +39,19 @@ const useStyles=makeStyles({
 })
 
 
-const Post = () =>{
+const Post = ({post}) =>{
 
     const classes=useStyles();
-    const url =`assets/laptop.jpg`;
-
+    const url =post.picture || `assets/laptop.jpg`;
+    // debugger;
+// console.log(post);
     return(
-        <Box className={classes.container}>
+        <Box className={classes.container} key={post._id}>
             <img src={url} alt="laptop" className={classes.image}/>
-            <Typography className={classes.text}>Technology</Typography>
-            <Typography className={classes.heading}>Technoly is a Future</Typography>
-            <Typography className={classes.text}>Author: Akanksha Patil</Typography>
-            <Typography className={classes.detail}>It is sample blogiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiimmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</Typography>
+            <Typography className={classes.text}>{post.categories} </Typography>
+            <Typography className={classes.heading}>{post.title}</Typography>
+            <Typography className={classes.text}>{post.username}</Typography>
+            <Typography className={classes.detail}>{post.description}</Typography>
         </Box>
     )
 }

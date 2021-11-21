@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 //component
 import Banner from './Banner';
 import Categories from './Categories';
-import Posts from './Postes'
+import Posts from './Posts'
 
 const Home = () => {
     return (
