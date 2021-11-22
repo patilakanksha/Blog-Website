@@ -1,5 +1,5 @@
 
-import { response } from 'express';
+import { request, response } from 'express';
 import Post from '../schema/post-schema.js';
 
 
@@ -27,4 +27,24 @@ export const getAllPosts = async (request,response) =>{
     catch(error){
         response.status(500).json("error in postcontroller ",error);
     }
+}
+
+
+export const getPost = async(request, response) => {
+    try
+    {
+       // console.log("testing")
+        let post = await Post.findById(request.params.id);
+     // console.log(post);
+       response.status(200).json(post);
+    }
+    catch(error)
+    {
+        response.status(500).json("error while opening post : ",error);
+      
+    }
+}
+
+export const greet = async (req, res) =>{
+    res.send("hello world");
 }
