@@ -6,7 +6,8 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
 
 import { Link , useParams} from 'react-router-dom'
-import { getPost } from '../../service/api.js';
+import { getPost , deletePost} from '../../service/api.js';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -54,7 +55,7 @@ const DetailView = () => {                     //match is default prop for check
     const {id} = useParams();
     const [post, setPost] = useState({});
     
- 
+ const navigate =useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -67,6 +68,13 @@ const DetailView = () => {                     //match is default prop for check
         fetchData();
     },[])
 
+    const deleteBlog = async() => {
+       
+        await deletePost(post._id);
+        navigate('/');
+    }
+
+
     return (
 
         <Box className={classes.container}>
@@ -74,7 +82,7 @@ const DetailView = () => {                     //match is default prop for check
             <img src={ post.picture ||url} alt="banner" className={classes.image} />
             <Box className={classes.icons}>
                 <Link to={`/update/${post._id}`}><Edit className={classes.icon} color="primary" /></Link>
-                <Delete className={classes.icon} color="error" />
+                <Delete onClick ={()=>deleteBlog()} className={classes.icon} color="error" />
             </Box>
             <Typography className={classes.heading}>{post.title}</Typography>
             <Box className={classes.subheading}>

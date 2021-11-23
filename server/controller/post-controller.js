@@ -58,3 +58,17 @@ export const updatePost =async (request,response) => {
         response.status(500).json(error);
     }
 }
+
+export const deletePost =async (request,response) => {
+    
+    try{
+        
+        let post = await Post.findById(request.params.id);   
+        await post.delete();   
+        response.status(200).response("Blog deleted Successfully");  
+    }
+    catch(error)
+    {
+        response.status(500).json(error);
+    }
+}
