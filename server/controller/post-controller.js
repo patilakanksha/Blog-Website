@@ -33,7 +33,7 @@ export const getAllPosts = async (request,response) =>{
 export const getPost = async(request, response) => {
     try
     {
-       // console.log("testing")
+       
         let post = await Post.findById(request.params.id);
      // console.log(post);
        response.status(200).json(post);
@@ -45,6 +45,16 @@ export const getPost = async(request, response) => {
     }
 }
 
-export const greet = async (req, res) =>{
-    res.send("hello world");
+export const updatePost =async (request,response) => {
+    
+    try{
+        
+        //console.log("testing update post controller");
+        await Post.findByIdAndUpdate(request.params.id , { $set: request.body});         //$set $push $addToSet
+        response.status(200).response("Blog updated Successfully");
+    }
+    catch(error)
+    {
+        response.status(500).json(error);
+    }
 }

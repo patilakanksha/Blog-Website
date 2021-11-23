@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import {Box, makeStyles, FormControl, InputBase, Button, TextareaAutosize} from '@material-ui/core';
 
+import { useNavigate } from 'react-router';
+
 import AddIcon from '@material-ui/icons/AddCircle';
-import { getPost } from '../../service/api';
+import { getPost, updatePost } from '../../service/api';
 
 const useStyles = makeStyles((theme) =>({
     conatainer:{
@@ -40,27 +42,50 @@ const useStyles = makeStyles((theme) =>({
  
 }))
 
+
+const initialValues = {
+    title: ``,
+    description: ``,
+    picture: ``,
+    username: 'akpatil',
+    categories: 'All',
+    createDate: new Date(),
+}
+
+
 const UpdateView = () => {
     const classes =useStyles();
     const url="/assets/writeblog.jpg";
     
+    const navigate = useNavigate();
+
+    const [post, setPost] = useState(initialValues);
     const {id} =useParams();
-    const [post, setPost]=useState({});
+    
+    
     
     
     useEffect(()=>{
 
         const fetchData = async () => {
-            console.log(id);
+            //console.log(id);
            // console.log("id is",id)
             let data = await getPost(id);
-            console.log(data);
+            // console.log(data);
             setPost(data);
         }
         fetchData();
-    }, [])
+    }, []);
 
 
+    const handleChange = (e) => {
+        setPost({ ...post, [e.target.name]: e.target.value })
+    }
+
+    const updateBlog= async () =>{
+        await updatePost({id}, post);
+        navigate(`/details/${id}`);
+    }
 
     
     return(
@@ -69,9 +94,14 @@ const UpdateView = () => {
             <FormControl className={classes.form}>
                     <AddIcon fontSize="large" color="action"/>
 
-                    <InputBase placeholder="title" value={post.title} className={classes.textfield}/>
+                    <InputBase 
+                     onChange={(e) => handleChange(e)}
+                    placeholder="title" 
+                    value={post.title}
+                    name="title"
+                    className={classes.textfield}/>
 
-                    <Button variant="contained" color="primary">Update</Button>
+                    <Button onClick={()=>updateBlog()}variant="contained" color="primary">Update</Button>
 
                     
             </FormControl>
@@ -80,6 +110,8 @@ const UpdateView = () => {
                     rowsMin={3}
                     placeholder="write Blog here"
                     value={post.description}
+                    name="description"
+                    onChange={(e) => handleChange(e)}
                     className={classes.textarea}
                     
                     

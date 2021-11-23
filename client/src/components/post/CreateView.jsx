@@ -54,7 +54,7 @@ const initialValues = {
 
 const CreateView = () => {
     const classes = useStyles();
-    const url = "assets/writeblog.jpg";
+    const url = "/assets/writeblog.jpg";
     const navigate = useNavigate();
 
     const [post, setPost] = useState(initialValues);
