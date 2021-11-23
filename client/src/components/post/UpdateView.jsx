@@ -1,7 +1,9 @@
-
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import {Box, makeStyles, FormControl, InputBase, Button, TextareaAutosize} from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/AddCircle';
+import { getPost } from '../../service/api';
 
 const useStyles = makeStyles((theme) =>({
     conatainer:{
@@ -40,14 +42,34 @@ const useStyles = makeStyles((theme) =>({
 
 const UpdateView = () => {
     const classes =useStyles();
-    const url="assets/writeblog.jpg";
+    const url="/assets/writeblog.jpg";
+    
+    const {id} =useParams();
+    const [post, setPost]=useState({});
+    
+    
+    useEffect(()=>{
+
+        const fetchData = async () => {
+            console.log(id);
+           // console.log("id is",id)
+            let data = await getPost(id);
+            console.log(data);
+            setPost(data);
+        }
+        fetchData();
+    }, [])
+
+
+
+    
     return(
         <Box className={classes.conatainer}>
-            <img src={url} alt="banner" className={classes.image}/>
+            <img src={post.picture || url} alt="banner" className={classes.image}/>
             <FormControl className={classes.form}>
                     <AddIcon fontSize="large" color="action"/>
 
-                    <InputBase placeholder="title" className={classes.textfield}/>
+                    <InputBase placeholder="title" value={post.title} className={classes.textfield}/>
 
                     <Button variant="contained" color="primary">Update</Button>
 
@@ -57,6 +79,7 @@ const UpdateView = () => {
             <TextareaAutosize
                     rowsMin={3}
                     placeholder="write Blog here"
+                    value={post.description}
                     className={classes.textarea}
                     
                     

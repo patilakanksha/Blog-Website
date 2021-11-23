@@ -61,12 +61,11 @@ const DetailView = () => {                     //match is default prop for check
             console.log(id);
            // console.log("id is",id)
             let data = await getPost(id);
-            
             console.log(data);
-           setPost(data);
+            setPost(data);
         }
         fetchData();
-    }, [])
+    },[])
 
     return (
 
@@ -74,13 +73,13 @@ const DetailView = () => {                     //match is default prop for check
         
             <img src={ post.picture ||url} alt="banner" className={classes.image} />
             <Box className={classes.icons}>
-                <Link to="/update"><Edit className={classes.icon} color="primary" /></Link>
+                <Link to={`/update/${post._id}`}><Edit className={classes.icon} color="primary" /></Link>
                 <Delete className={classes.icon} color="error" />
             </Box>
             <Typography className={classes.heading}>{post.title}</Typography>
             <Box className={classes.subheading}>
                 <Typography>Auther: <span style={{ fontWeight: 600 }}>{post.username}</span></Typography>
-                <Typography style={{ marginLeft: 'auto' }}>{post.createDate}</Typography>
+                <Typography style={{ marginLeft: 'auto' }}>{new Date(post.createDate).toDateString()}</Typography>
             </Box>
             <Typography>{post.description}</Typography>
         </Box>
