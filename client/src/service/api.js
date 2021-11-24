@@ -15,10 +15,10 @@ export const createPost = async (post)=>{
     
 }
 
-export const getAllPosts = async() =>{
+export const getAllPosts = async(param) =>{
   try{
     //return "testing";
-       let response = await axios.get(`${URL}/posts`)                //posts api calling from route
+       let response = await axios.get(`${URL}/posts${param}`)                //posts api calling from route
        return response.data;
 
   }

@@ -28,14 +28,22 @@ const Categories = () => {
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>All Categories</TableCell>
+                        <TableCell>
+                            <Link className={classes.link} to={`/`}>  
+                                All Categories
+                            </Link>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {
                         categories.map(category =>(
                             <TableRow>
-                                <TableCell>{category}</TableCell>
+                                <TableCell>
+                                    <Link className={classes.link} to={`/?categories=${category}`}>
+                                        {category}
+                                    </Link>
+                                </TableCell>
                                 </TableRow>
                         ))
                     }

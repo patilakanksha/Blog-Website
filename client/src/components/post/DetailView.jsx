@@ -8,6 +8,7 @@ import { Edit, Delete } from '@material-ui/icons';
 import { Link , useParams} from 'react-router-dom'
 import { getPost , deletePost} from '../../service/api.js';
 import { useNavigate } from 'react-router';
+import { mergeClasses } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("sm")]: {
             display: "block",
         }
+    },
+    link:{
+        textDecoration:'none',
+        color:'inherit'
     }
 }))
 
@@ -71,6 +76,7 @@ const DetailView = () => {                     //match is default prop for check
     const deleteBlog = async() => {
        
         await deletePost(post._id);
+        
         navigate('/');
     }
 
@@ -86,7 +92,9 @@ const DetailView = () => {                     //match is default prop for check
             </Box>
             <Typography className={classes.heading}>{post.title}</Typography>
             <Box className={classes.subheading}>
-                <Typography>Auther: <span style={{ fontWeight: 600 }}>{post.username}</span></Typography>
+            <Link to={`/?username=${post.username}`} className={classes.link}>
+                    <Typography>Auther: <span style={{ fontWeight: 600 }}>{post.username}</span></Typography>
+             </Link> 
                 <Typography style={{ marginLeft: 'auto' }}>{new Date(post.createDate).toDateString()}</Typography>
             </Box>
             <Typography>{post.description}</Typography>

@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 
 import { Grid } from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Post from './Post';
 
 import { getAllPosts } from '../../service/api.js';             //  returns promise
@@ -9,6 +10,7 @@ import { getAllPosts } from '../../service/api.js';             //  returns prom
 const Posts = () => {
 
     let [posts, setPosts]=useState([]);
+    const {search} = useLocation();
 
    // let posts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -16,12 +18,12 @@ const Posts = () => {
     useEffect(() => {
        
         const fetchData = async () =>{
-           let data= await getAllPosts();
+           let data= await getAllPosts(search);
             console.log(data);
             setPosts(data);
         }
         fetchData();
-    }, [])
+    }, [search])
 
     return (
         posts.map(post => (
